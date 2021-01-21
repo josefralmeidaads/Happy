@@ -1,6 +1,8 @@
 import React from 'react';
-import { FiPlus } from 'react-icons/fi';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { FiPlus, FiArrowRight } from 'react-icons/fi';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { Link } from 'react-router-dom';
+import Leaflet from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -10,8 +12,16 @@ import {
   Header,
   Footer,
   CreateOrphanage,
+  Popups
 } from './styles';
 import mapMarkerImg from '../../assets/map-marker.svg';
+
+const mapIcon = Leaflet.icon({
+  iconUrl: mapMarkerImg,
+  iconSize: [58, 60],
+  iconAnchor: [29, 60],
+  popupAnchor: [0, -70],
+})
 
 const OrphonagesMap: React.FC = () => {
   return (
@@ -50,6 +60,19 @@ const OrphonagesMap: React.FC = () => {
         <TileLayer 
           url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
         />
+
+        <Marker 
+          icon={mapIcon}
+          position={[-21.2159207,-42.8889974]}
+        >
+          <Popups closeButton={false} minWidth={240} maxWidth={240}>
+            Criança Feliz
+            <Link to="/app">
+              <FiArrowRight size={20} color={"#FFF"}/>
+            </Link>
+          </Popups>
+        </Marker>
+
       </MapContainer>
     </PageMap>
   );
